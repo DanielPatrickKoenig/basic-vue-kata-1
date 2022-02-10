@@ -1,17 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ul>
+      <li v-for="(value, key, index) in points" :key="index">
+        <TextInput 
+          :name="key"
+          :start-value="value"
+          @value-change="onValueChange"
+        />
+      </li>
+    </ul>
+    <DotPostioner
+      :x="points.x" 
+      :y="points.y" 
+      :radius="points.radius"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TextInput from './components/TextInput.vue';
+import DotPostioner from './components/DotPositioner.vue';
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TextInput,
+    DotPostioner
+  },
+  data() {
+    return {
+      points: {
+        x: 0,
+        y: 0,
+        radius: 3
+      }
+    }
+  },
+  methods:{
+    onValueChange(e){
+      this.points[e.name] = e.value;
+      console.log(this.points);
+    }
   }
 }
 </script>
